@@ -6,7 +6,7 @@ BUILD_DIR=${1:-}
 CACHE_DIR=${2:-}
 ENV_DIR=${3:-}
 
-while read IFS= read -r repo_url ; do
+while IFS= read -r repo_url ; do
     tmpdir=$(mktemp --directory private-buildpack-XXXXXXXX)
     echo "Repo: ${repo_url}"
     bash -c "git clone ${repo_url} \"${tmpdir}\""
