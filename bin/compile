@@ -6,7 +6,7 @@ BUILD_DIR=${1:-}
 CACHE_DIR=${2:-}
 ENV_DIR=${3:-}
 
-for repo_url in $(cat "${BUILD_DIR}/.heroku-private-buildpacks") ; do
+while read IFS= read -r repo_url ; do
     tmpdir=$(mktemp --directory private-buildpack-XXXXXXXX)
     echo "Repo: ${repo_url}"
     bash -c "git clone ${repo_url} \"${tmpdir}\""
@@ -21,4 +21,4 @@ for repo_url in $(cat "${BUILD_DIR}/.heroku-private-buildpacks") ; do
         rm -rf "${tmpdir}"
         exit 1
     fi
-done
+done < "${BUILD_DIR}/.heroku-private-buildpacks"
